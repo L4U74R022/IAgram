@@ -1,0 +1,14 @@
+{
+    "private": true,
+    "workspaces": [
+      "packages/*"
+    ],
+    "scripts": {
+      "build": "npm run build -w shared && npm run build -w service-a && npm run build -w service-b && npm run build -w service-c",
+      "start:all": "concurrently \"npm start -w service-a\" \"npm start -w service-b\" \"npm start -w service-c\""
+    },
+    "devDependencies": {
+      "typescript": "^4.9"
+    }
+  }
+  

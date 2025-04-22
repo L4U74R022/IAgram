@@ -1,0 +1,25 @@
+{
+  "files": [],
+  "references": [
+    { "path": "./packages/shared" },
+    { "path": "./packages/api-composer-service" },
+    { "path": "./packages/ln-processing-service" }
+  ],
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@iagram/shared": ["packages/shared/src"],
+      "@iagram/shared/*": ["packages/shared/src/*"]
+    },
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "NodeNext",
+    "esModuleInterop": true,
+    "allowImportingTsExtensions": true,
+    "forceConsistentCasingInFileNames": true,
+    "composite": true,
+    "declaration": true,
+    "outDir": "dist",
+    "skipLibCheck": true
+  }
+}
