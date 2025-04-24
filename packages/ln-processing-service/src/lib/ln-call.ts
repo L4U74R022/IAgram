@@ -1,6 +1,6 @@
 import userPromptDTO from "@iagram/shared/dtos/userPrompt.dto";
 
-const AIML_URL = 'https://api.aimlapi.com/v1/chat/completions'
+const AIML_URL = 'https://router.huggingface.co/novita/v3/openai/chat/completions'
 const apiCall = async (userPrompt: userPromptDTO) => {
     console.log(process.env.AIML_API_KEY)
     const response = await fetch(AIML_URL, {
@@ -10,13 +10,14 @@ const apiCall = async (userPrompt: userPromptDTO) => {
             'Authorization': 'Bearer ' + process.env.AIML_API_KEY,
         },
         body: JSON.stringify({
-            model: 'gpt-3.5-turbo',
-            messages: [
+            "messages": [
                 {
-                    role: 'user',
-                    content: userPrompt.userPrompt,
-                },
+                    "role": "user",
+                    "content": "Turn this user request into a graphviz code for kroki diagrams, i need you to only answer with the code and nothing else please: "+ userPrompt.userPrompt
+                }
             ],
+            "model": "deepseek/deepseek-v3-0324",
+            "stream": false
         }),
     })
     if (!response.ok) {
@@ -32,7 +33,13 @@ const apiCall = async (userPrompt: userPromptDTO) => {
     if (data.choices[0].message.content === '') {
         throw new Error(`Error parsing AIML API response: message was empty`);
     }
+    return filterOutput(data.choices[0].message.content);
+}
+const filterOutput = (output: string) => {
+    return output
+    .replace(/^```graphviz\s*/, '') // Remove starting triple backticks and 'graphviz'
+    .replace(/\s*```$/, '')         // Remove ending triple backticks
+    .replace(/\n/g, '');  
 
-    return data.choices[0].message.content;
 }
 export default apiCall;
