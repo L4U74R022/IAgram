@@ -1,3 +1,6 @@
+export type DiagramType = 'blockdiag' | 'graphviz' | 'pnantuml';
+export type Format = 'svg';
+
 export default class DiagramRequestDTO {
     constructor(
         public readonly diagramType: DiagramType,
@@ -22,7 +25,15 @@ export default class DiagramRequestDTO {
         if (!diagramCode) throw new Error('Diagram code cannot be empty');
         if (typeof diagramCode !== 'string')
             throw new Error('Diagram code must be a string');
+        
+        const validDiagramTypes: DiagramType[] = ['blockdiag', 'graphviz', 'pnantuml'];
+        const validFormats: Format[] = ['svg'];
+
+        if (!validDiagramTypes.includes(diagramType as DiagramType)) {
+            throw new Error(`Invalid diagram type: ${diagramType}`);
+        }
+        if (!validFormats.includes(outputFormat as Format)) {
+            throw new Error(`Invalid output format: ${outputFormat}`);
+        }
     }
 }
-type DiagramType = 'blockdiag' | 'graphviz' | 'pnantuml';
-type Format = 'svg';

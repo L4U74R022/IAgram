@@ -1,8 +1,15 @@
 export default class modelResponseDTO {
+    public message: string;
     public diagramType: string;
     public diagramCode: string;
     
-    constructor(diagramType: string, diagramCode: string){
+    constructor(message: string, diagramType: string, diagramCode: string){
+        // Validate the message
+        if (!message) 
+            throw new Error('Message cannot be empty');
+        if (typeof message !== 'string')
+            throw new Error('Message must be a string');
+        this.message = message;
         // Validate the diagram type
         if (!diagramType) 
             throw new Error('Diagram Type cannot be empty');

@@ -1,45 +1,44 @@
 import type { Request, Response } from 'express';
 import userPromptDTO from '@iagram/shared/dtos/userPrompt.dto';
+import modelResponseDTO from '@iagram/shared/dtos/modelResponse.dto';
+import processLn from '../lib/process-ln';
+import DiagramRequestDTO, { DiagramType } from '@iagram/shared/dtos/diagramRequest.dto';
+import DiagramResponseDTO from '@iagram/shared/dtos/diagramResponse.dto';
+import diagram from '../lib/diagram';
 
-export const getDiagram = (req: Request, res: Response) => {
+
+export const getDiagram = async (req: Request, res: Response) => {
     //
     try {
         // Validate the existence of the promp
-        if (!req.body || !req.body.prompt)
-            throw new Error('Prompt is required:' + JSON.stringify(req));
+        if (!req.body || !req.body.prompt || req.body.prompt === "")
+            throw new Error('Prompt is required');
 
         // Get the prompt from the request body
         const { prompt } = req.body;
 
         // Validate the prompt
         const userPrompt = new userPromptDTO(prompt);
-        // http call to natural language processing service
-        // const response = await generateDiagram(userPrompt);
 
-        fetch('http://localhost:3001/api-call', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(userPrompt),
-        })
-            .then((response) => { console.log("success", response) })
-            .catch((error) => { console.error('Error:', error); });
+        // Call the processLn function to get the response
+        const response = await processLn(userPrompt); // As this throws an error if not done correctly, we don't need to check the response for null or undefined
 
+        console.log(response);
 
-        // validate rpc response 
-        // const modelResponse = new modelResponseDTO(response.diagramType, response.diagramCode);
+        // Validate HTTP response 
+        const modelResponse = new modelResponseDTO(response.message, response.diagramType, response.diagramCode);
 
+        const request = new DiagramRequestDTO(modelResponse.diagramType as DiagramType, modelResponse.diagramCode)
         // call the diagram generation service
-        // const diagramResponse = await generateDiagram(modelResponse);
+        const diagramed = await diagram(request);
+        // console.log(diagramed);
 
         // validate diagram response
-        // const diagramResponse = new DiagramResponseDTO(diagramResponse);
+        // const diagramed = new DiagramResponseDTO(diagramResponse);
 
         // Send the diagram response back to the client
-        // res.status(200).json(diagramResponse);
-        res.status(200).json({ "message": "Diagram generation is not implemented yet." });
-
+        res.header('Content-Type', 'image/svg+xml');
+        res.status(200).send(diagramed);
     }
     catch (error) {
         // Handle errors
