@@ -4,6 +4,8 @@ export default class userPromptDTO {
         // Validate the payload
         if (!userPrompt) 
             throw new Error('Payload cannot be empty');
+        if (userPrompt=="")
+            throw new Error('Payload cannot be empty');
         if (typeof userPrompt !== 'string') 
             throw new Error('Payload must be a string');
         this.userPrompt = userPrompt;
