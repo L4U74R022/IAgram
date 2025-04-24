@@ -1,9 +1,9 @@
-import DiagramRequestDTO from "../../../shared/dtos/diagramRequest.dto";
+import DiagramRequestDTO from '@iagram/shared/dtos/diagramRequest.dto';
 
-const BASE_URL = 'https://kroki.io';
+const KROKI_URL = 'http://localhost:8000';
 
 export async function generateDiagram(diagram: DiagramRequestDTO) {
-    const url = `${BASE_URL}/${diagram.diagramType}/${diagram.outputFormat}`;
+    const url = `${KROKI_URL}/${diagram.diagramType}/${diagram.outputFormat}`;
     const response = await fetch(url, {
         method: 'POST',
         headers: {

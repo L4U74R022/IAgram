@@ -5,12 +5,15 @@ import { generateDiagram } from './lib/diagram-generator';
 export async function fetchDiagram(req: Request, res: Response) {
     try {
         const { diagramType, outputFormat, diagramCode } = req.body;
-        console.log(diagramType, outputFormat, diagramCode);
-        const diagram = new DiagramRequestDTO(diagramType, outputFormat, diagramCode);
+        const diagram = new DiagramRequestDTO(
+            diagramType,
+            diagramCode,
+            outputFormat
+        );
+        console.log('Diagrama a crear:', diagram);
         const response = await generateDiagram(diagram);
         res.status(200).end(response);
-    }
-    catch (error) {
+    } catch (error) {
         console.error('Error:', error);
         res.status(400).json({ error: error.message });
     }

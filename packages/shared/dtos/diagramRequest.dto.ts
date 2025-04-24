@@ -2,13 +2,17 @@ export default class DiagramRequestDTO {
     constructor(
         public readonly diagramType: DiagramType,
         public readonly diagramCode: string,
-        public readonly outputFormat: Format='svg',
+        public readonly outputFormat: Format = 'svg'
     ) {
         // Validate the payload
         this.validate(diagramType, outputFormat, diagramCode);
     }
 
-    private validate(diagramType: string, outputFormat: string, diagramCode: string) {
+    private validate(
+        diagramType: string,
+        outputFormat: string,
+        diagramCode: string
+    ) {
         if (!diagramType) throw new Error('Diagram type cannot be empty');
         if (typeof diagramType !== 'string')
             throw new Error('Diagram type must be a string');
@@ -20,5 +24,5 @@ export default class DiagramRequestDTO {
             throw new Error('Diagram code must be a string');
     }
 }
- type DiagramType = 'graphviz' | 'plantuml' | 'mermaid' | 'dbml'
- type Format = 'svg' 
+type DiagramType = 'blockdiag' | 'graphviz' | 'pnantuml';
+type Format = 'svg';
