@@ -11,6 +11,7 @@ const port = process.env.PORT || 3000;
 app.use(express.json());
 
 // Test route
+app.use(express.static(join(__dirname, 'public')));
 app.get('/', (req: Request, res: Response) => {
   res.sendFile(join(__dirname, 'index.html'));
 });
