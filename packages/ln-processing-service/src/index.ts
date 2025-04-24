@@ -1,10 +1,10 @@
-import express from 'express';
-import type { Request, Response } from 'express';
-import { apiCallController } from './controllers/apiCallController.ts';
 import dotenv from 'dotenv';
+import type { Request, Response } from 'express';
+import express from 'express';
+import { apiCallController } from './controllers/apiCallController.ts';
 dotenv.config();
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3001;
 app.use(express.json());
 
 // Test route
