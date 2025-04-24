@@ -23,7 +23,7 @@ export const getDiagram = async (req: Request, res: Response) => {
         // Call the processLn function to get the response
         const response = await processLn(userPrompt); // As this throws an error if not done correctly, we don't need to check the response for null or undefined
 
-        console.log(response);
+        // console.log(response);
 
         // Validate HTTP response 
         const modelResponse = new modelResponseDTO(response.message, response.diagramType, response.diagramCode);
@@ -31,7 +31,6 @@ export const getDiagram = async (req: Request, res: Response) => {
         const request = new DiagramRequestDTO(modelResponse.diagramType as DiagramType, modelResponse.diagramCode)
         // call the diagram generation service
         const diagramed = await diagram(request);
-        // console.log(diagramed);
 
         // validate diagram response
         // const diagramed = new DiagramResponseDTO(diagramResponse);
