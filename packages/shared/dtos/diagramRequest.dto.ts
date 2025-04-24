@@ -1,8 +1,8 @@
-export default class DiagramResponseDTO {
+export default class DiagramRequestDTO {
     constructor(
         public readonly diagramType: DiagramType,
-        public readonly outputFormat: Format,
-        public readonly diagramCode: string
+        public readonly diagramCode: string,
+        public readonly outputFormat: Format='svg',
     ) {
         // Validate the payload
         this.validate(diagramType, outputFormat, diagramCode);
@@ -21,4 +21,4 @@ export default class DiagramResponseDTO {
     }
 }
  type DiagramType = 'graphviz' | 'plantuml' | 'mermaid' | 'dbml'
- type Format = 'svg'
+ type Format = 'svg' 

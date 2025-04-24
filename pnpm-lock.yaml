@@ -37,6 +37,22 @@ importers:
         specifier: ^2.0.0
         version: 2.0.0(@types/node@22.14.1)(typescript@5.3.3)
 
+  packages/diagram-service:
+    dependencies:
+      express:
+        specifier: ^4.21.2
+        version: 4.21.2
+    devDependencies:
+      '@types/express':
+        specifier: ^5.0.1
+        version: 5.0.1
+      '@types/node':
+        specifier: ^22.14.1
+        version: 22.14.1
+      ts-node-dev:
+        specifier: ^2.0.0
+        version: 2.0.0(@types/node@22.14.1)(typescript@5.3.3)
+
   packages/ln-processing-service:
     dependencies:
       '@iagram/shared':
