@@ -15,12 +15,10 @@ export const apiCallController = async (req: Request, res: Response) => {
         const userPromptInstance = new userPromptDTO(userPrompt);
 
         // Call the LN api with the userPrompt
-        // const response = await apiCall(userPromptInstance);
-        const response = "digraph G { Hello->World }";
+        const response = await apiCall(userPromptInstance);
 
         //Ensure API response with the DTO
         const modelResponse = new modelResponseDTO("message", "graphviz", response)
-
 
         console.log(modelResponse);
 

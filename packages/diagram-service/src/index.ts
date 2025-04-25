@@ -13,7 +13,7 @@ app.get('/', async (req: Request, res: Response) => {
     req.body = {
         diagramType: 'graphviz',
         outputFormat: 'svg',
-        diagramCode: 'digraph G { Hello->World }',
+        diagramCode: 'digraph {    usuario -> sucursal [label="linkeado a"]}',
     };
     fetchDiagram(req, res);
 });

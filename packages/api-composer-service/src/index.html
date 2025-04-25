@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>IAgram - Crea diagramas con lenguaje natural</title>
+        <link type="text/css" rel="stylesheet" href="pico.blue.min.css" />
+    </head>
+    <body>
+        <main class="container">
+            <form>
+                <textarea
+                    name="prompt"
+                    rows="4"
+                    cols="50"
+                    placeholder="Vuele su creatividad creando diagramas con kroki"
+                ></textarea>
+                <button type="submit">Submit</button>
+                <div class="img"></div>
+            </form>
+        </main>
+
+        <script>
+            const form = document.querySelector('form');
+            form.addEventListener('submit', (event) => {
+                event.preventDefault();
+                const prompt = document.querySelector('textarea').value;
+                console.log(JSON.stringify({ prompt }));
+
+                fetch('/diagram', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ prompt }),
+                })
+                    .then((response) => response.text())
+                    .then((data) => {
+                        console.log(data);
+                        // document.querySelector('textarea').value = '';
+                        const svg = document.querySelector('.img');
+                        svg.innerHTML = data;
+                    })
+                    .catch((error) => {
+                        console.error('Error:', error);
+                    });
+            });
+        </script>
+    </body>
+</html>

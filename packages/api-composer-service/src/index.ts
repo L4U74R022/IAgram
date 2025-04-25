@@ -1,7 +1,9 @@
-import express from 'express';
-import type { Request, Response } from 'express';
-import { getDiagram } from './controllers/diagramController.ts';
 import dotenv from 'dotenv';
+import type { Request, Response } from 'express';
+import express from 'express';
+import { join } from 'path';
+import { getDiagram } from './controllers/diagramController.ts';
+
 dotenv.config();
 const app = express();
 const port = process.env.PORT || 3000;
@@ -9,8 +11,9 @@ const port = process.env.PORT || 3000;
 app.use(express.json());
 
 // Test route
+app.use(express.static(join(__dirname, 'public')));
 app.get('/', (req: Request, res: Response) => {
-  res.send('Hello from TypeScript + Express!');
+  res.sendFile(join(__dirname, 'index.html'));
 });
 
 
